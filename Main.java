@@ -157,4 +157,3 @@ public class Main {
         turma2.print();
     }
 }
-picopico
