@@ -161,6 +161,33 @@ class Turma {
         this.estudantes.add(estudante);
     }
 
+    public void gerarEstatisticas() {
+        int aprovados = 0;
+        int emRecuperacao = 0;
+        int reprovados = 0;
+
+        for (Estudante estudante : estudantes){
+            String status =  estudante.getStatus(curso);
+            switch (status) {
+                case "APROVADO":
+                    aprovados++;
+                    break;
+                case "EM RECUPERAÇÃO":
+                    emRecuperacao++;
+                    break;  
+                case "REPROVADO":
+                    reprovados++;
+                    break;   
+            }
+        
+    }
+
+    System.out.println("Estatísticas da Turma: " + identificacao);
+    System.out.println("Aprovados: " + aprovados);
+    System.out.println("Em Recuperação: " + emRecuperacao);
+    System.out.println("Reprovados: " + reprovados);
+}
+
     public void print() {
         System.out.println("Turma: " + identificacao + ", Curso: " + curso.getNome());
 
@@ -178,6 +205,7 @@ class Turma {
             e.print(curso);
             System.out.println();
         }
+        gerarEstatisticas();
     }
 }
 
@@ -232,8 +260,11 @@ public class Main {
         turma2.adicionarProfessor(professor1);
         turma2.adicionarProfessor(professor2);
 
+        System.out.println("==== Turma 1 ====");
         turma1.print();
-        System.out.println();
+    
+        System.out.println("==== Turma 2 ====");
         turma2.print();
     }
 }
+
