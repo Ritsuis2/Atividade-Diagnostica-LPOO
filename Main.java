@@ -96,17 +96,23 @@ class Estudante extends Pessoa {
     private String matricula;
     private List<Double> notas;
     private List<Double> pesos;
+    private Double notaRecuperacao;
 
     public Estudante(String nome, String cpf, String endereco, String telefone, String matricula) {
         super(nome, cpf, endereco, telefone);
         this.matricula = matricula;
         this.notas = new ArrayList<>();
         this.pesos = new ArrayList<>();
+        this.notaRecuperacao = null;
     }
 
     public void adicionarNota(double valor, double peso) {
         this.notas.add(valor);
         this.pesos.add(peso);
+    }
+
+    public void adicionarNotaRecuperacao(double valor) {
+        this.notaRecuperacao = valor;
     }
 
     public double calcularMediaPonderada() {
@@ -122,10 +128,20 @@ class Estudante extends Pessoa {
 
     public String getStatus(Curso curso) {
         double media = calcularMediaPonderada();
-
+        
+        if (notaRecuperacao == null) {
         if (media >= curso.getMediaAprovacao()) {
             return "APROVADO";
         } else if (media >= curso.getMediaRecuperacao()) {
+            return "EM RECUPERAÇÃO";
+        } else {
+            return "REPROVADO";
+        }
+    }
+    double mediaFinal = (media + notaRecuperacao) / 2;
+        if (mediaFinal >= curso.getMediaAprovacao()) {
+            return "APROVADO";
+        } else if (mediaFinal >= curso.getMediaRecuperacao()) {
             return "EM RECUPERAÇÃO";
         } else {
             return "REPROVADO";
@@ -137,9 +153,13 @@ class Estudante extends Pessoa {
         System.out.println("Matricula: " + matricula);
         System.out.println("Media Ponderada: " + calcularMediaPonderada());
         System.out.println("Status: " + getStatus(curso));
+        if (notaRecuperacao != null) {
+            System.out.println("Nota de Recuperação: " + notaRecuperacao);
+        } else {
+            System.out.println("Nota de Recuperação: SN");
+        }
     }
 }
-
 class Turma {
     private String identificacao;
     private Curso curso;
@@ -159,6 +179,37 @@ class Turma {
 
     public void adicionarEstudante(Estudante estudante) {
         this.estudantes.add(estudante);
+    }
+
+    public void gerarListas() {
+        List<Estudante> aprovados = new ArrayList<>();
+        List<Estudante> reprovados = new ArrayList<>();
+        List<Estudante> emRecuperacao = new ArrayList<>();
+
+        for (Estudante estudante : estudantes) {
+            String status = estudante.getStatus(curso);
+            if (status.equals("APROVADO")) {
+                aprovados.add(estudante);
+            } else if (status.equals("REPROVADO")) {
+                reprovados.add(estudante);
+            } else if (status.equals("EM RECUPERAÇÃO")) {
+                emRecuperacao.add(estudante);
+            }
+        }
+        System.out.println("Lista de Aprovados:");
+        for (Estudante estudante : aprovados) {
+            System.out.println(estudante.nome);
+        }
+
+        System.out.println("\nLista de Reprovados:");
+        for (Estudante estudante : reprovados) {
+            System.out.println(estudante.nome);
+        }
+
+        System.out.println("\nLista de Estudantes em Recuperação:");
+        for (Estudante estudante : emRecuperacao) {
+            System.out.println(estudante.nome);
+        }
     }
 
     public void gerarEstatisticas() {
@@ -206,6 +257,7 @@ class Turma {
             System.out.println();
         }
         gerarEstatisticas();
+        gerarListas();
     }
 }
 
@@ -241,6 +293,8 @@ public class Main {
         estudante5.adicionarNota(2.0, 3);
         estudante5.adicionarNota(3.5, 3);
         estudante5.adicionarNota(4.0, 4);
+
+        estudante5.adicionarNotaRecuperacao(6.0);
 
         Turma turma1 = new Turma("TURMA1", curso1);
         turma1.adicionarEstudante(estudante1);
