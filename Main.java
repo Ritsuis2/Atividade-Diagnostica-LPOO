@@ -80,15 +80,25 @@ abstract class Pessoa implements Printable {
 
 class Professor extends Pessoa {
     private int siape;
+    private boolean isCoordenador;
+
 
     public Professor(String nome, String cpf, String endereco, String telefone, int siape) {
         super(nome, cpf, endereco, telefone);
         this.siape = siape;
+        this.isCoordenador = isCoordenador;
+
+    }
+
+    public boolean isCoordenador() {
+        return isCoordenador;
     }
 
     public void print() {
         super.print();
         System.out.println("SIAPE: " + siape);
+        System.out.println("Coordenador: " + (isCoordenador ? "Sim" : "Não"));
+
     }
 }
 
@@ -160,17 +170,40 @@ class Estudante extends Pessoa {
         }
     }
 }
+
+class LogModificacaoNota {
+    private String nomeCoordenador;
+    private double notaAnterior;
+    private double notaAtual;
+
+    public LogModificacaoNota(String nomeCoordenador, double notaAnterior, double notaAtual) {
+        this.nomeCoordenador = nomeCoordenador;
+        this.notaAnterior = notaAnterior;
+        this.notaAtual = notaAtual;
+    }
+
+    public void printLog() {
+        System.out.println("Coordenador: " + nomeCoordenador);
+        System.out.println("Nota Anterior: " + notaAnterior);
+        System.out.println("Nota Atual: " + notaAtual);
+    }
+}
+
 class Turma {
     private String identificacao;
     private Curso curso;
     private List<Estudante> estudantes;
     private List<Professor> professores;
+    private List<LogModificacaoNota> logs;
+
 
     public Turma(String identificacao, Curso curso) {
         this.identificacao = identificacao;
         this.curso = curso;
         this.estudantes = new ArrayList<>();
         this.professores = new ArrayList<>();
+        this.logs = new ArrayList<>();
+
     }
 
     public void adicionarProfessor(Professor professor) {
@@ -179,7 +212,27 @@ class Turma {
 
     public void adicionarEstudante(Estudante estudante) {
         this.estudantes.add(estudante);
+
     }
+     public void alterarNotaEstudante(Professor coordenador, Estudante estudante, double novaNota) {
+        if (coordenador.isCoordenador()) {
+            for (Nota nota : estudante.notas) {
+                double notaAnterior = nota.getValor();
+                nota.setValor(novaNota);
+                LogModificacaoNota log = new LogModificacaoNota(coordenador.nome, notaAnterior, novaNota);
+                logs.add(log);
+            }
+        } else {
+            System.out.println("Somente coordenadores podem alterar notas.");
+        }
+    }
+
+    public void printLogs() {
+        for (LogModificacaoNota log : logs) {
+            log.printLog();
+        }
+    }
+
 
     public void mostrarInformacoes() {
         System.out.println("Turma: " + identificacao);
@@ -255,7 +308,7 @@ class Turma {
     public void print() {
 
         mostrarInformacoes();
-        
+
         System.out.println("\nEstudantes:");
         for (Estudante e : estudantes) {
             e.print(curso);
@@ -283,7 +336,7 @@ public class Main {
         Estudante estudante2 = new Estudante("Mirele Oliveira", "333.333.33-3", "Rua C, Bairro D", "998877665", "2023002");
         estudante2.adicionarNota(7.0, 4);
         estudante2.adicionarNota(8.0, 3);
-        estudante2.adicionarNota(5.0, 3);
+        estudante2.adicionarNota(8.5, 3);
 
         Estudante estudante3 = new Estudante("Ana Costa", "444.444.444-4", "Rua E, Bairro F", "985633211", "5552668");
         estudante3.adicionarNota(5.0, 2);
