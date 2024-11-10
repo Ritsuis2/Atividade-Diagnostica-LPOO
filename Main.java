@@ -181,6 +181,20 @@ class Turma {
         this.estudantes.add(estudante);
     }
 
+    public void mostrarInformacoes() {
+        System.out.println("Turma: " + identificacao);
+        System.out.println("Curso: " + curso.getNome());
+        
+        if (professores.isEmpty()) {
+            System.out.println("Nenhum professor vinculado.");
+        } else {
+            System.out.println("Professores:");
+            for (Professor professor : professores) {
+                professor.print();
+            }
+        }
+    }
+
     public void gerarListas() {
         List<Estudante> aprovados = new ArrayList<>();
         List<Estudante> reprovados = new ArrayList<>();
@@ -238,24 +252,16 @@ class Turma {
     System.out.println("Em Recuperação: " + emRecuperacao);
     System.out.println("Reprovados: " + reprovados);
 }
-
     public void print() {
-        System.out.println("Turma: " + identificacao + ", Curso: " + curso.getNome());
 
-        if (professores.isEmpty()) {
-            System.out.println("Nenhum professor vinculado.");
-        } else {
-            System.out.println("Professores:");
-            for (Professor professor : professores) {
-                professor.print();
-            }
-        }
-
-        System.out.println("Estudantes:");
+        mostrarInformacoes();
+        
+        System.out.println("\nEstudantes:");
         for (Estudante e : estudantes) {
             e.print(curso);
             System.out.println();
         }
+
         gerarEstatisticas();
         gerarListas();
     }
