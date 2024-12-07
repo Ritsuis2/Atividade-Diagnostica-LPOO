@@ -1,9 +1,6 @@
 
 package escola;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         Curso curso1 = new Curso("Engenharia de Software", 9, 7.0, 2.5);

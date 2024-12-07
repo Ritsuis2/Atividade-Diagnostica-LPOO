@@ -1,4 +1,4 @@
-package packageEscola;
+package escola;
 
 abstract class Pessoa implements Printable {
     protected String nome;

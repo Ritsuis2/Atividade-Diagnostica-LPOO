@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Estudante extends Pessoa {
+
     private String matricula;
     private List<Double> notas;
     private List<Double> pesos;
     private Double notaRecuperacao;
-    private Double adicionarNotaRecuperacao;
-
 
     public Estudante(String nome, String cpf, String endereco, String telefone, String matricula) {
         super(nome, cpf, endereco, telefone);
@@ -49,17 +48,17 @@ class Estudante extends Pessoa {
 
     public String getStatus(Curso curso) {
         double media = calcularMediaPonderada();
-        
+
         if (notaRecuperacao == null) {
-             if (media >= curso.getMediaAprovacao()) {
-                 return "APROVADO";
-        } else if (media >= curso.getMediaRecuperacao()) {
-            return "EM RECUPERAÇÃO";
-        } else {
-            return "REPROVADO";
+            if (media >= curso.getMediaAprovacao()) {
+                return "APROVADO";
+            } else if (media >= curso.getMediaRecuperacao()) {
+                return "EM RECUPERAÇÃO";
+            } else {
+                return "REPROVADO";
+            }
         }
-    }
-    double mediaFinal = (media + notaRecuperacao) / 2;
+        double mediaFinal = (media + notaRecuperacao) / 2;
         if (mediaFinal >= curso.getMediaAprovacao()) {
             return "APROVADO";
         } else if (mediaFinal >= curso.getMediaRecuperacao()) {
