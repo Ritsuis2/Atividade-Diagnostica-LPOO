@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Turma {
+
     private String identificacao;
     private Curso curso;
     private List<Estudante> estudantes;
     private List<Professor> professores;
     private List<LogModificacaoNota> logs;
-
 
     public Turma(String identificacao, Curso curso) {
         this.identificacao = identificacao;
@@ -28,9 +28,10 @@ class Turma {
         this.estudantes.add(estudante);
 
     }
-     public void alterarNotaEstudante(Professor coordenador, Estudante estudante, double novaNota) {
+
+    public void alterarNotaEstudante(Professor coordenador, Estudante estudante, double novaNota) {
         if (coordenador.isCoordenador()) {
-            for (Nota nota : estudante.notas) {
+            for (Nota nota : estudante.getNotas()) {
                 double notaAnterior = nota.getValor();
                 nota.setValor(novaNota);
                 LogModificacaoNota log = new LogModificacaoNota(coordenador.nome, notaAnterior, novaNota);
@@ -47,11 +48,10 @@ class Turma {
         }
     }
 
-
     public void mostrarInformacoes() {
         System.out.println("Turma: " + identificacao);
         System.out.println("Curso: " + curso.getNome());
-        
+
         if (professores.isEmpty()) {
             System.out.println("Nenhum professor vinculado.");
         } else {
@@ -66,14 +66,14 @@ class Turma {
         List<Estudante> aprovados = new ArrayList<>();
         List<Estudante> reprovados = new ArrayList<>();
         List<Estudante> emRecuperacao = new ArrayList<>();
-       
+
         for (Estudante estudante : estudantes) {
             double media = estudante.calcularMediaPonderada();
             double mediaFinal = media;
-    
+
             if (estudante.getNotaRecuperacao() != null) {
                 mediaFinal = (media + estudante.getNotaRecuperacao()) / 2;
-            }    
+            }
             if (mediaFinal >= curso.getMediaAprovacao()) {
                 aprovados.add(estudante);
             } else if (mediaFinal < curso.getMediaRecuperacao()) {
@@ -82,54 +82,56 @@ class Turma {
                 emRecuperacao.add(estudante);
             }
         }
-    
+
         System.out.println("Lista de Aprovados:");
         for (Estudante estudante : aprovados) {
             System.out.println(estudante.nome);
         }
-    
+
         System.out.println("\nLista de Reprovados:");
         for (Estudante estudante : reprovados) {
             System.out.println(estudante.nome);
         }
-    
+
         System.out.println("\nLista de Estudantes em Recuperação:");
         for (Estudante estudante : emRecuperacao) {
             System.out.println(estudante.nome);
         }
     }
+
     public void gerarEstatisticas() {
         int aprovados = 0;
         int emRecuperacao = 0;
         int reprovados = 0;
 
-        for (Estudante estudante : estudantes){
-            String status =  estudante.getStatus(curso);
+        for (Estudante estudante : estudantes) {
+            String status = estudante.getStatus(curso);
             switch (status) {
                 case "APROVADO":
                     aprovados++;
                     break;
                 case "EM RECUPERAÇÃO":
                     emRecuperacao++;
-                    break;  
+                    break;
                 case "REPROVADO":
                     reprovados++;
-                    break;   
+                    break;
             }
-        
+
         }
         System.out.println("Estatísticas da Turma: " + identificacao);
-    System.out.println("Aprovados: " + aprovados);
-    System.out.println("Em Recuperação: " + emRecuperacao);
-    System.out.println("Reprovados: " + reprovados);
-}
+        System.out.println("Aprovados: " + aprovados);
+        System.out.println("Em Recuperação: " + emRecuperacao);
+        System.out.println("Reprovados: " + reprovados);
+    }
+
     public void print() {
 
         mostrarInformacoes();
 
         System.out.println("\nEstudantes:");
         for (Estudante e : estudantes) {
-            e.print(curso);
+            e.print();
             System.out.println();
         }
 
@@ -143,14 +145,12 @@ class Turma {
             String status = estudante.getStatus(curso);
             System.out.println("Nome: " + estudante.nome);
             System.out.println("Status: " + status);
-            if ("EM RECUPERAÇÃO".equals(status) && estudante.notaRecuperacao == null) {
+            if ("EM RECUPERAÇÃO".equals(status) && estudante.getNotaRecuperacao() == null) {
                 System.out.println("Nota de Recuperação: SN (Sem Nota)");
-            } else if (estudante.notaRecuperacao != null) {
-                System.out.println("Nota de Recuperação: " + estudante.notaRecuperacao);
+            } else if (estudante.getNotaRecuperacao() != null) {
+                System.out.println("Nota de Recuperação: " + estudante.getNotaRecuperacao());
             }
             System.out.println();
         }
     }
 }
-
-  

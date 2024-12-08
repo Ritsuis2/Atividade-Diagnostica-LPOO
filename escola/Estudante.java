@@ -6,21 +6,22 @@ import java.util.List;
 class Estudante extends Pessoa {
 
     private String matricula;
-    private List<Double> notas;
-    private List<Double> pesos;
+    private List<Nota> notas;
     private Double notaRecuperacao;
 
     public Estudante(String nome, String cpf, String endereco, String telefone, String matricula) {
         super(nome, cpf, endereco, telefone);
         this.matricula = matricula;
         this.notas = new ArrayList<>();
-        this.pesos = new ArrayList<>();
         this.notaRecuperacao = null;
     }
 
     public void adicionarNota(double valor, double peso) {
-        this.notas.add(valor);
-        this.pesos.add(peso);
+        this.notas.add(new Nota(valor, peso));
+    }
+
+    public void adicionarNotaRecuperacao(double valor) {
+        this.notaRecuperacao = valor;
     }
 
     public void setNotaRecuperacao(Double notaRecuperacao) {
@@ -31,7 +32,7 @@ class Estudante extends Pessoa {
         return notaRecuperacao;
     }
 
-    public List<Double> getNotas() {
+    public List<Nota> getNotas() {
         return notas;
     }
 
@@ -40,8 +41,8 @@ class Estudante extends Pessoa {
         double somaPesos = 0;
 
         for (int i = 0; i < notas.size(); i++) {
-            somaNotas += notas.get(i) * pesos.get(i);
-            somaPesos += pesos.get(i);
+            somaNotas += notas.get(i).getValor() * notas.get(i).getPeso();
+            somaPesos += notas.get(i).getPeso();
         }
         return somaPesos == 0 ? 0 : somaNotas / somaPesos;
     }
