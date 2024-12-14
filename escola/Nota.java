@@ -2,23 +2,35 @@ package escola;
 
 class Nota {
 
-    private double valor;
-    private double peso;
 
-    public Nota(double valor, double peso) {
-        this.valor = valor;
-        this.peso = peso;
-    }
+   Double nota1;
+   Double nota2;
+   Double nota3;
+   Double peso1;
+   Double peso2;
+   Double peso3;
+   Curso curso;
+   Turma turma;
 
-    public double getValor() {
-        return valor;
+    public Nota(){
+        nota1 = null;
+        nota2 = null;
+        nota3 = null;
     }
-
-    public void setValor(double valor) {
-        this.valor = valor;
+        
+    public double calcularMedia() {
+         if (nota1 == null) || (nota2 == null) || (nota3 == null) ) {
+             return -1
+        }
+    double media = (nota1 *peso1 + nota2 *peso2 + nota3 *peso3)/ (peso1 + peso2 + peso3);
+        return media;
     }
-
-    public double getPeso() {
-        return peso;
-    }
-}
+    public String getSituacao() {
+        double media = calcularMedia();
+        if (media >= curso,getMediaRecuperacao()) {
+            return "Aprovado";
+        }else if (media >=curso.getMediaRecuperacao()) {
+            return "Em recuperação";
+        }else {
+            return "Reprovado";
+        }
