@@ -1,0 +1,1 @@
+Esse projeto tem como objtivo criar mais funcionalidades em um codigo elaborado em uma atividade diagnostican nas aulas de Linagugem de Programção Orientada ao Obejto, de modo que seja possível, nas aulas seguintes, utilizá-lo para aplicar os conceitos de Refatoração e Padrões. 
