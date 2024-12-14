@@ -1,6 +1,7 @@
 package escola;
 
 class Nota {
+
     private double valor;
     private double peso;
 
@@ -16,7 +17,6 @@ class Nota {
     public void setValor(double valor) {
         this.valor = valor;
     }
-
 
     public double getPeso() {
         return peso;

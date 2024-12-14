@@ -73,12 +73,16 @@ class Turma {
 
             if (estudante.getNotaRecuperacao() != null) {
                 mediaFinal = (media + estudante.getNotaRecuperacao()) / 2;
-            }
-            if (mediaFinal >= curso.getMediaAprovacao()) {
+                if (mediaFinal < 5) {
+                    reprovados.add(estudante);
+                } else if (mediaFinal >= curso.getMediaAprovacao()) {
+                    aprovados.add(estudante);
+                }
+            } else if (media >= curso.getMediaAprovacao()) {
                 aprovados.add(estudante);
-            } else if (mediaFinal < curso.getMediaRecuperacao()) {
+            } else if (media < curso.getMediaRecuperacao()) {
                 reprovados.add(estudante);
-            } else if (estudante.getNotaRecuperacao() == null) {
+            } else {
                 emRecuperacao.add(estudante);
             }
         }
@@ -145,12 +149,23 @@ class Turma {
             String status = estudante.getStatus(curso);
             System.out.println("Nome: " + estudante.nome);
             System.out.println("Status: " + status);
-            if ("EM RECUPERAÇÃO".equals(status) && estudante.getNotaRecuperacao() == null) {
-                System.out.println("Nota de Recuperação: SN (Sem Nota)");
-            } else if (estudante.getNotaRecuperacao() != null) {
-                System.out.println("Nota de Recuperação: " + estudante.getNotaRecuperacao());
+
+            if ("EM RECUPERAÇÃO".equals(status)) {
+                if (estudante.getNotaRecuperacao() == null) {
+                    System.out.println("Nota de Recuperação: SN (Sem Nota)");
+                } else {
+                    System.out.println("Nota de Recuperação: " + estudante.getNotaRecuperacao());
+                    double media = estudante.calcularMediaPonderada();
+                    double mediaFinal = (media + estudante.getNotaRecuperacao()) / 2;
+                    if (mediaFinal < 5) {
+                        System.out.println("Status Final (Após Rec): REPROVADO");
+                    } else {
+                        System.out.println("Status Final (Após Rec): APROVADO");
+                    }
+                }
             }
             System.out.println();
         }
     }
+
 }
