@@ -1,7 +1,7 @@
-
 package escola;
 
 public class Main {
+
     public static void main(String[] args) {
         Curso curso1 = new Curso("Engenharia de Software", 9, 7.0, 2.5);
         Curso curso2 = new Curso("Banco de Dados", 7, 7.0, 2.5);
@@ -61,5 +61,6 @@ public class Main {
 
         System.out.println("==== Turma 2 ====");
         turma2.print();
+
     }
 }

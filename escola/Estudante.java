@@ -16,10 +16,6 @@ class Estudante extends Pessoa {
         this.notaRecuperacao = null;
     }
 
-    public void adicionarNota(double valor, double peso) {
-        this.notas.add(new Nota(valor, peso));
-    }
-
     public void adicionarNotaRecuperacao(double valor) {
         this.notaRecuperacao = valor;
     }
