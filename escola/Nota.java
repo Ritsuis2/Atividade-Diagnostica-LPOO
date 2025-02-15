@@ -11,6 +11,15 @@ class Nota {
     Curso curso;
     Turma turma;
 
+    public Nota(Double nota1, Double nota2, Double nota3, Double peso1, Double peso2, Double peso3) {
+        this.nota1 = nota1;
+        this.nota2 = nota2;
+        this.nota3 = nota3;
+        this.peso1 = peso1;
+        this.peso2 = peso2;
+        this.peso3 = peso3;
+    }
+
     public Nota() {
         nota1 = null;
         nota2 = null;
@@ -36,23 +45,18 @@ class Nota {
         }
     }
 
-    public String getSituacao() {
+    public String getSituacao(Curso curso) {
         double media = calcularMedia();
-        if (media >= curso
-           {
-
+        if (media == -1) {
+            return "Notas incompletas";
         }
-        ,getMediaRecuperacao()
-            
-        
-        
-            ) {
+
+        if (media >= curso.getMediaAprovacao()) {
             return "Aprovado";
-        }else if (media >=curso.getMediaRecuperacao()) {
+        } else if (media >= curso.getMediaRecuperacao()) {
             return "Em recuperação";
-        }else {
+        } else {
             return "Reprovado";
         }
     }
-
 }

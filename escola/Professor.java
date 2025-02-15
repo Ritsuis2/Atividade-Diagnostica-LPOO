@@ -1,9 +1,9 @@
 package escola;
 
 class Professor extends Pessoa {
+
     private int siape;
     private boolean isCoordenador;
-
 
     public Professor(String nome, String cpf, String endereco, String telefone, int siape) {
         super(nome, cpf, endereco, telefone);
