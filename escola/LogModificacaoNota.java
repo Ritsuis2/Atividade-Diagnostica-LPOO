@@ -1,6 +1,7 @@
 package escola;
 
 class LogModificacaoNota {
+
     private String nomeCoordenador;
     private double notaAnterior;
     private double notaAtual;
@@ -15,5 +16,6 @@ class LogModificacaoNota {
         System.out.println("Coordenador: " + nomeCoordenador);
         System.out.println("Nota Anterior: " + notaAnterior);
         System.out.println("Nota Atual: " + notaAtual);
+        System.out.println("----------------------------");
     }
 }

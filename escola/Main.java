@@ -1,5 +1,7 @@
 package escola;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -27,6 +29,38 @@ public class Main {
         estudante5.adicionarNota(2.0, 3.5, 4.0, 3.0, 3.0, 4.0);  // Corrigido: Passando Double explícito
 
         estudante5.adicionarNotaRecuperacao(6.0);
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+        do {
+            System.out.println("Escolha uma opção:");
+            System.out.println("1. Modificar nota de um estudante");
+            System.out.println("2. Ver logs de um estudante");
+            System.out.println("0. Sair");
+            opcao = scanner.nextInt();
+            scanner.nextLine();  // Consumir a quebra de linha
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite o nome do coordenador: ");
+                    String coordenador = scanner.nextLine();
+                    System.out.print("Digite o índice da nota a modificar (0 para primeira nota): ");
+                    int indice = scanner.nextInt();
+                    System.out.print("Digite a nova nota: ");
+                    double novaNota = scanner.nextDouble();
+                    estudante1.modificarNota(indice, novaNota, coordenador);
+                    break;
+                case 2:
+                    estudante1.imprimirLogs();  // Exibe os logs
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida");
+            }
+        } while (opcao != 0);
+        scanner.close();
 
         Turma turma1 = new Turma("TURMA1", curso1);
         turma1.adicionarEstudante(estudante1);

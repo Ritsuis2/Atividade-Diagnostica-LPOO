@@ -42,12 +42,6 @@ class Turma {
         }
     }
 
-    public void printLogs() {
-        for (LogModificacaoNota log : logs) {
-            log.printLog();
-        }
-    }
-
     public void mostrarInformacoes() {
         System.out.println("Turma: " + identificacao);
         System.out.println("Curso: " + curso.getNome());
