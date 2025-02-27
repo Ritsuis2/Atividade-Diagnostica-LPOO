@@ -8,7 +8,7 @@ class Estudante extends Pessoa {
     private String matricula;
     private List<Nota> notas;
     private Double notaRecuperacao;
-    private List<LogModificacaoNota> logs;
+    private List<LogModificacaoNota> historicoNotas;
 
     public Estudante(String nome, String cpf, String endereco, String telefone, String matricula) {
         super(nome, cpf, endereco, telefone);
@@ -16,6 +16,7 @@ class Estudante extends Pessoa {
         this.notas = new ArrayList<>();
         this.notaRecuperacao = null;
         this.logs = new ArrayList<>();
+        this.historicoNotas = new ArrayList<>();
 
     }
 
@@ -35,11 +36,13 @@ class Estudante extends Pessoa {
         }
     }
 
-    public void imprimirLogs() {
-        for (LogModificacaoNota log : logs) {
-            log.printLog();
+    public void exibirHistoricoNotas() {
+        System.out.println("Histórico de Notas do estudante " + super.getNome());
+        for (LogModificacaoNota log : historicoNotas) {
+            System.out.println(log); 
         }
     }
+
 
     public void adicionarNotaRecuperacao(double valor) {
         this.notaRecuperacao = valor;
