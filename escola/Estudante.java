@@ -25,10 +25,13 @@ class Estudante extends Pessoa {
 
     public void modificarNota(int index, double novaNota, String nomeCoordenador) {
         if (index >= 0 && index < notas.size()) {
-            double notaAnterior = notas.get(index).calcularMedia();
-            notas.get(index).nota1 = novaNota;
+            Nota nota = notas.get(index);
+            double notaAnterior = nota.calcularMedia();
+            nota.setNota1(novaNota);
+
             LogModificacaoNota log = new LogModificacaoNota(nomeCoordenador, notaAnterior, novaNota);
             logs.add(log);
+            log.printLog(); 
         }
     }
 
@@ -52,7 +55,7 @@ class Estudante extends Pessoa {
 
         for (Nota nota : notas) {
             somaNotas += nota.calcularMedia() * nota.peso1;
-            somaPesos += nota.peso1;
+            somaPesos += nota.getPeso1;
         }
 
         return somaPesos == 0 ? 0 : somaNotas / somaPesos;
