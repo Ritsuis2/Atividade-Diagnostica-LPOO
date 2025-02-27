@@ -63,8 +63,8 @@ class Turma {
 
         for (Estudante estudante : estudantes) {
             double media = estudante.calcularMediaPonderada();
-            double mediaFinal = (notaRec != null) ? (media + notaRec) / 2 : media;
-            double  notaRec = estudante.getNotaRecuperacao();
+            Double notaRec = estudante.getNotaRecuperacao(); 
+            double mediaFinal = (notaRec != null) ? (media + notaRec) / 2 : media; 
 
              if (media >= curso.getMediaAprovacao()) {
                 aprovados.add(estudante); 
