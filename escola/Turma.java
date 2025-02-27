@@ -63,21 +63,23 @@ class Turma {
 
         for (Estudante estudante : estudantes) {
             double media = estudante.calcularMediaPonderada();
-            double mediaFinal = media;
+            double mediaFinal = (notaRec != null) ? (media + notaRec) / 2 : media;
+            double  notaRec = estudante.getNotaRecuperacao();
 
-            if (estudante.getNotaRecuperacao() != null) {
-                mediaFinal = (media + estudante.getNotaRecuperacao()) / 2;
-                if (mediaFinal < 5) {
-                    reprovados.add(estudante);
-                } else if (mediaFinal >= curso.getMediaAprovacao()) {
-                    aprovados.add(estudante);
-                }
-            } else if (media >= curso.getMediaAprovacao()) {
-                aprovados.add(estudante);
+             if (media >= curso.getMediaAprovacao()) {
+                aprovados.add(estudante); 
             } else if (media < curso.getMediaRecuperacao()) {
-                reprovados.add(estudante);
-            } else {
-                emRecuperacao.add(estudante);
+                reprovados.add(estudante); 
+            } else { 
+                if (notaRec == null) {
+                    emRecuperacao.add(estudante); 
+                } else {
+                    if (mediaFinal < 5) {
+                        reprovados.add(estudante); 
+                    } else {
+                        aprovados.add(estudante); 
+                    }
+                }
             }
         }
 
